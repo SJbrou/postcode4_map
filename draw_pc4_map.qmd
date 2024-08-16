@@ -19,25 +19,9 @@ editor: source
 number-sections: false
 ---
 
-<style>
-/* Adjust the sidebar width and overall grid layout */
-.sidebar {
-    width: 80px; /* Set the sidebar width to 80px (or any value you prefer) */
-}
-
-.grid {
-    margin-left: 100px; /* Adjust the margin on the grid to fit your layout */
-}
-
-/* Optional: Adjust the content area margin */
-.content {
-    margin-left: 100px; /* Ensure the content doesn't overlap with the sidebar */
-}
-</style>
-
-
 Instructions and examples to plot postcode (4) maps in R
 
+Files can be downloaded from [github](https://github.com/SJbrou/postcode4_map)
 
 # Methods
 
@@ -64,6 +48,7 @@ Opendatasoft provides .geojson (and other formats) data of these postcode aress 
 Downloading and reading decreases performance. Things can be sped up by (1) decreasing the resolution and (2) Preprocessing to .RData file. Since the geojson file is over 100mb, we preproccessed it to an .RData file.
 
 Preprocessing the geojson file from opendatasoft can be done by
+
 ```{r preprocessing, message=FALSE, eval=FALSE}
 # Eval=FALSE to prevent running this code block
 # Assumes geojson data to be at data/postcode4.geojson
@@ -72,7 +57,6 @@ geojson_pc4 <- st_simplify(geojson_pc4, dTolerance = 2) # decrease granularity s
 geojson_pc4$pc4_code <- as.numeric(geojson_pc4$pc4_code) # change datatype for merging on postcode4 later
 save(geojson_pc4, file = "data/postcode4.RData") # save as .RData
 ```
-
 
 ::: column-margin
 1.  the geojson data has high levels of detail and is thus resource intensive to load. Decreasing the resolution does practical not impact the final experience.
@@ -220,4 +204,5 @@ draw_postcode4_map <- function(postcode4_path, data_path, column_to_plot) {
 postcode4_map <- draw_postcode4_map("data/postcode4.RData", "data/data.xlsx", "population")
 postcode4_map  # This will display the map
 ```
-* Note: population values are randomly generated and do not reflect real population numbers.
+
+-   Note: population values are randomly generated and do not reflect real population numbers.
